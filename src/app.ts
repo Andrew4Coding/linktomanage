@@ -5,13 +5,15 @@ import task from './modules/task/task.route.js';
 
 const app = new Hono();
 
-app.use(errorHandler);
-app.use(logHandler);
+app.onError(errorHandler)
+
+app.use("*", logHandler);
 
 app.route('/task', task);
 
 app.get('/healthcheck', (c) => { 
     return c.text('OK');
 });
+
 
 export default app;
