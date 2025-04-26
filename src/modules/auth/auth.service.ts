@@ -1,7 +1,7 @@
-export async function login() {
+export async function login(email: string, password: string) {
 
 }
 
-export async function register() {
+export async function register(email: string, password: string, name: string) {
     
 }
