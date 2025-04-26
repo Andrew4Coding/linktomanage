@@ -3,7 +3,7 @@ import { Hono } from "hono";
 import { successResponse } from "../../common/response.js";
 import { authMiddleware } from "../../middleware/auth.middleware.js";
 import type { authenticatedRoute } from "../../types.js";
-import { createTaskSchema } from "./task.schema.js";
+import { createTaskSchema, updateTaskSchema } from "./task.schema.js";
 
 const app = new Hono<authenticatedRoute>()
 
@@ -32,7 +32,7 @@ app.post('/',
     })
 
 app.put('/:id',
-    zValidator("json", createTaskSchema),
+    zValidator("json", updateTaskSchema),
     (c) => {
         const { id } = c.req.param();
         const body = c.req.valid("json");

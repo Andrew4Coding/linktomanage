@@ -10,4 +10,18 @@ export const createTaskSchema = z.object({
     tags: z.array(z.string()).optional(),
 })
 
+export const updateTaskSchema = z.object({
+    title: z.string().min(1, "Title is required").optional(),
+    description: z.string().min(1, "Description is required").optional(),
+    status: z.nativeEnum(TASK_STATUS).optional(),
+    priority: z.nativeEnum(TASK_PRIORITY).optional(),
+    dueDate: z.date().optional(),
+    tags: z.array(z.string()).optional(),
+}).refine((data) => {
+    return Object.keys(data).length > 0;
+}, {
+    message: "At least one field is required to update",
+});
+
 export type createTaskType = z.infer<typeof createTaskSchema>;
+export type updateTaskType = z.infer<typeof updateTaskSchema>;
