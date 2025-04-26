@@ -4,51 +4,61 @@ import { successResponse } from "../../common/response.js";
 import { authMiddleware } from "../../middleware/auth.middleware.js";
 import type { authenticatedRoute } from "../../types.js";
 import { createTaskSchema, updateTaskSchema } from "./task.schema.js";
+import { createTask, deleteTask, getAllTasks, getSingleTask, updateTask } from "./task.service.js";
 
 const app = new Hono<authenticatedRoute>()
 
 app.use(authMiddleware);
 
 app.get('/', (c) => {
-    return successResponse(c, {
+    const user = c.get("user");
+    const query = c.req.query();
 
-    }, "Successfully get all tasks");
+    const responseData = getAllTasks(user.id, query);
+
+    return successResponse(c, responseData, "Successfully get all tasks");
 })
 
-app.get('/:id', (c) => {
+app.get('/:id', async (c) => {
     const { id } = c.req.param();
-    return successResponse(c, {
-        id
-    }, `Successfully get task with id ${id}`);
+    const user = c.get("user");
+
+    const responseData = await getSingleTask(user.id, id);
+
+    return successResponse(c, responseData, `Successfully get task with id ${id}`);
 })
 
 app.post('/',
     zValidator("json", createTaskSchema),
-    (c) => {
+    async (c) => {
         const body = c.req.valid("json");
+        const user = c.get("user");
 
-        return successResponse(c, {
-        }, "Successfully create task", 201);
+        const responseData = await createTask(user.id, body);
+
+        return successResponse(c, responseData, "Successfully create task", 201);
     })
 
 app.put('/:id',
     zValidator("json", updateTaskSchema),
-    (c) => {
+    async (c) => {
         const { id } = c.req.param();
+
         const body = c.req.valid("json");
+        const user = c.get("user");
 
-        return successResponse(c, {
-            id,
-            ...body
-        }, `Successfully update task with id ${id}`);
+        const responseData = await updateTask(user.id, id, body);
+
+        return successResponse(c, responseData, `Successfully update task with id ${id}`);
     })
-    
-app.delete('/:id', (c) => {
-    const { id } = c.req.param();
 
-    return successResponse(c, {
-        id
-    }, `Successfully delete task with id ${id}`);
+app.delete('/:id', async (c) => {
+    const { id } = c.req.param();
+    const user = c.get("user");
+
+    const responseData = await deleteTask(user.id, id);
+
+    return successResponse(c, responseData, `Successfully delete task with id ${id}`);
 })
 
 export default app;
