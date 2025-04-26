@@ -1,6 +1,7 @@
+import type { filterParams } from "../../types.js";
 import type { createTaskType } from "./task.schema.js";
 
-export async function getAllTasks(email: string) {
+export async function getAllTasks(email: string, query: filterParams) {
 
 }
 

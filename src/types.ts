@@ -9,3 +9,11 @@ export type authenticatedRoute = {
         user: authPayload
     }
 }
+
+export type filterParams = {
+    page?: number;
+    limit?: number;
+    filters?: {
+        [key: string]: string | number | boolean;
+    }
+}
