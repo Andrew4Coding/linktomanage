@@ -10,7 +10,6 @@ export const errorHandler = async (err: unknown, c: Context) => {
                 status: 'error',
                 isSuccess: false,
                 message: err.message,
-                data: null,
             },
             err.statusCode as ContentfulStatusCode
         )
@@ -26,7 +25,6 @@ export const errorHandler = async (err: unknown, c: Context) => {
             isSuccess: false,
             status: 'error',
             message: 'Internal Server Error',
-            data: null,
         },
         500
     )
