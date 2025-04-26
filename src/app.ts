@@ -7,8 +7,7 @@ import task from './modules/task/task.route.js';
 const app = new Hono();
 
 app.onError(errorHandler)
-
-app.use("*", logHandler);
+app.use(logHandler);
 
 app.route('/auth', auth)
 app.route('/task', task);
