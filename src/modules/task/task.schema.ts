@@ -6,7 +6,16 @@ export const createTaskSchema = z.object({
     description: z.string().min(1, "Description is required"),
     status: z.nativeEnum(TASK_STATUS).default("PENDING"),
     priority: z.nativeEnum(TASK_PRIORITY).optional(),
-    dueDate: z.date().optional(),
+    dueDate: z.string().optional().transform((val) => {
+        if (val) {
+            const date = new Date(val);
+            if (isNaN(date.getTime())) {
+                throw new Error("Invalid date format");
+            }
+            return date;
+        }
+        return undefined;
+    }),
     tags: z.array(z.string()).optional(),
 })
 
@@ -23,7 +32,16 @@ export const updateTaskSchema = z.object({
     description: z.string().min(1, "Description is required").optional(),
     status: z.nativeEnum(TASK_STATUS).optional(),
     priority: z.nativeEnum(TASK_PRIORITY).optional(),
-    dueDate: z.date().optional(),
+    dueDate: z.string().optional().transform((val) => {
+        if (val) {
+            const date = new Date(val);
+            if (isNaN(date.getTime())) {
+                throw new Error("Invalid date format");
+            }
+            return date;
+        }
+        return undefined;
+    }),
     tags: z.array(z.string()).optional(),
 }).refine((data) => {
     return Object.keys(data).length > 0;

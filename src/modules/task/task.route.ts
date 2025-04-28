@@ -10,11 +10,11 @@ const app = new Hono<authenticatedRoute>()
 
 app.use(authMiddleware);
 
-app.get('/', (c) => {
+app.get('/', async (c) => {
     const user = c.get("user");
     const query = c.req.query();
 
-    const responseData = getAllTasks(user.id, query);
+    const responseData = await getAllTasks(user.id, query);
 
     return successResponse(c, responseData, "Successfully get all tasks");
 })
