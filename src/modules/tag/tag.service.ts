@@ -1,6 +1,6 @@
 import { AppError } from "@/common/error.js";
 import type { filterParams } from "@/types.js";
-import prisma from "prisma/prisma.js";
+import prisma from "@db/prisma.js";
 import type { createTagsType, createTagType, deleteTagsType, updateTagType } from "./tag.schema.js";
 
 export async function getAllTags(userId: string, query?: filterParams) { 

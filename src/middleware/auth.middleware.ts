@@ -1,6 +1,6 @@
 import type { Context, Next } from "hono";
 import { verify } from "hono/jwt";
-import prisma from "prisma/prisma.js";
+import prisma from "@db/prisma.js";
 import { AppError } from "../common/error.js";
 import type { authPayload } from "../types.js";
 

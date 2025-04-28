@@ -1,6 +1,6 @@
 import { AppError } from "@/common/error.js";
 import type { filterParams } from "@/types.js";
-import prisma from "prisma/prisma.js";
+import prisma from "@db/prisma.js";
 import type { createBulkTasksType, createTaskType, deleteTasksType, updateTaskType } from "./task.schema.js";
 
 export async function getAllTasks(userId: string, query?: filterParams) {

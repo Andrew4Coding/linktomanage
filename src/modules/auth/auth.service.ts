@@ -1,7 +1,7 @@
 import { AppError } from "@/common/error.js";
 import argon2 from "argon2";
 import { sign } from "hono/jwt";
-import prisma from "prisma/prisma.js";
+import prisma from "@db/prisma.js";
 
 export async function login(email: string, password: string) {
     const user = await prisma.user.findUnique({
