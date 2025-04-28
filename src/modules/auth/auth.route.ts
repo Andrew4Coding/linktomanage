@@ -17,10 +17,10 @@ app.post("/login",
 
 app.post("/register",
     zValidator("json", registerSchema),
-    (c) => {
+    async (c) => {
         const { email, password, name } = c.req.valid("json");
         
-        const responseData = register(email, password, name);
+        const responseData = await register(email, password, name);
 
         return successResponse(c, responseData, "Registration successful", 201);
 })

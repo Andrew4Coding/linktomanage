@@ -1,10 +1,10 @@
+import { successResponse } from "@/common/response.js";
+import { authMiddleware } from "@/middleware/auth.middleware.js";
+import type { authenticatedRoute } from "@/types.js";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { successResponse } from "../../common/response.js";
-import { authMiddleware } from "../../middleware/auth.middleware.js";
-import type { authenticatedRoute } from "../../types.js";
-import { createTaskSchema, updateTaskSchema } from "./task.schema.js";
-import { createTask, deleteTask, getAllTasks, getSingleTask, updateTask } from "./task.service.js";
+import { createBulkTasksSchema, createTaskSchema, deleteBulkTasksSchema, updateTaskSchema } from "./task.schema.js";
+import { createTask, createTasks, deleteTask, deleteTasks, getAllTasks, getSingleTask, updateTask } from "./task.service.js";
 
 const app = new Hono<authenticatedRoute>()
 
@@ -28,7 +28,7 @@ app.get('/:id', async (c) => {
     return successResponse(c, responseData, `Successfully get task with id ${id}`);
 })
 
-app.post('/',
+app.post('/single',
     zValidator("json", createTaskSchema),
     async (c) => {
         const body = c.req.valid("json");
@@ -39,7 +39,18 @@ app.post('/',
         return successResponse(c, responseData, "Successfully create task", 201);
     })
 
-app.put('/:id',
+app.post('/bulk',
+    zValidator("json", createBulkTasksSchema),
+    async (c) => {
+        const body = c.req.valid("json");
+        const user = c.get("user");
+
+        const responseData = await createTasks(user.id, body);
+
+        return successResponse(c, responseData, "Successfully create tasks", 201);
+    })
+
+app.patch('/:id',
     zValidator("json", updateTaskSchema),
     async (c) => {
         const { id } = c.req.param();
@@ -52,7 +63,7 @@ app.put('/:id',
         return successResponse(c, responseData, `Successfully update task with id ${id}`);
     })
 
-app.delete('/:id', async (c) => {
+app.delete('/single/:id', async (c) => {
     const { id } = c.req.param();
     const user = c.get("user");
 
@@ -60,5 +71,15 @@ app.delete('/:id', async (c) => {
 
     return successResponse(c, responseData, `Successfully delete task with id ${id}`);
 })
+
+app.delete('/bulk',
+    zValidator("json", deleteBulkTasksSchema),
+    async (c) => {
+        const body = c.req.valid("json");
+        const user = c.get("user");
+
+        const responseData = await deleteTasks(user.id, body);
+        return successResponse(c, responseData, "Successfully delete tasks");
+    })
 
 export default app;

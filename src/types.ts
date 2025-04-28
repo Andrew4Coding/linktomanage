@@ -13,6 +13,7 @@ export type authenticatedRoute = {
 export type filterParams = {
     page?: number;
     limit?: number;
+    search?: string;
     filters?: {
         [key: string]: string | number | boolean;
     }
