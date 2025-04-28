@@ -53,8 +53,7 @@ export async function createTask(userId: string, task: createTaskType) {
             },
             ...rest
         }
-    }).catch((error) => {
-        console.log(error);
+    }).catch(() => {
         throw new AppError("Failed to create task", 500);
     });
         

@@ -1,4 +1,4 @@
-import { TASK_PRIORITY, TASK_STATUS } from "@db/generated/index.js";
+import { TASK_PRIORITY, TASK_STATUS } from "@prisma/client";
 import { z } from "zod";
 
 export const createTaskSchema = z.object({

@@ -21,8 +21,7 @@ export async function getAllTags(userId: string, query?: filterParams) {
         orderBy: {
             createdAt: "desc"
         },
-    }).catch((err) => {
-        console.log(err);
+    }).catch(() => {
         throw new AppError("Failed to get tags", 500);
     })
 
