@@ -18,7 +18,7 @@ jobs:
           script: |
             # Navigate to the project directory
             cd ~/linktomanage
-            git pull origin main
+            git pull origin master
 
             docker build -t linktomanage:latest .
             docker compose down
