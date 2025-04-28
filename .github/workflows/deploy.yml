@@ -1,0 +1,27 @@
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to VM
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH and Pull Latest Changes
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          script: |
+            # Navigate to the project directory
+            cd ~/linktomanage
+            git pull origin main
+
+            docker build -t linktomanage:latest .
+            docker compose down
+            docker compose up -d
+            
+    

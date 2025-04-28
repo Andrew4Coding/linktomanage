@@ -28,5 +28,15 @@ services:
     ports:
       - "8000:8000"
 
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    depends_on:
+      - linktomanage
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+
 volumes:
   postgres_data:
