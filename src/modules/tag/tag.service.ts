@@ -47,7 +47,7 @@ export async function getSingleTag(userId: string, tagId: string) {
 }
 
 export async function createTag(userId: string, body: createTagType) {
-    const existingTag = await prisma.taskTag.findUnique({
+    const existingTag = await prisma.taskTag.findFirst({
         where: {
             name: body.name,
             userId

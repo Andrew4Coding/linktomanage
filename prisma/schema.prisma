@@ -43,7 +43,7 @@ model Task {
 model TaskTag {
   id String @id @default(cuid())
 
-  name String @unique
+  name String
   userId String
 
   createdAt DateTime @default(now())

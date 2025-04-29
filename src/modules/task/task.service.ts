@@ -48,7 +48,7 @@ export async function createTask(userId: string, task: createTaskType) {
             userId,
             TaskTag: {
                 connect: tags?.map(tag => ({
-                    name: tag
+                    id: tag
                 }))
             },
             ...rest
@@ -71,7 +71,7 @@ export async function createTasks(userId: string, body: createBulkTasksType) {
                     ...rest,
                     TaskTag: {
                         connect: tags?.map(tag => ({
-                            name: tag
+                            id: tag
                         }))
                     }
                 }
@@ -96,7 +96,7 @@ export async function updateTask(userId: string, taskId: string, task: updateTas
             ...rest,
             TaskTag: {
                 connect: tags?.map(tag => ({
-                    name: tag
+                    id: tag
                 }))
             }
         }
