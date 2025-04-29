@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for linktomanage on 2025-04-28T21:20:21+07:00
+# fly.toml app configuration file generated for linktomanageapi on 2025-04-29T11:01:46+07:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'linktomanage'
+app = 'linktomanageapi'
 primary_region = 'sin'
 
 [build]

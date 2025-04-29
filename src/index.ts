@@ -10,6 +10,7 @@ index.notFound(notFoundHandler)
 
 serve({
   fetch: index.fetch,
+  hostname: '0.0.0.0',
   port: 8000
 }, (info) => {
   console.log(`Server is running on http://localhost:${info.port}`)
